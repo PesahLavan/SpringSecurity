@@ -1,4 +1,4 @@
-package com.pesahlavan.training;
+package com.pesahlavan.training.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import com.pesahlavan.training.services.ProcessInterface;
 
 import java.security.Principal;
 
@@ -23,6 +24,9 @@ public class HomeController {
 
 	@Autowired
 	private AccessDecisionManager accessDecisionManager;
+
+	@Autowired
+	private ProcessInterface process;
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -45,6 +49,9 @@ public class HomeController {
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String mainPage() {
+
+		logger.info(process.getMessage());
+
 		printUserDetails();
 
 		return "/content/user";
