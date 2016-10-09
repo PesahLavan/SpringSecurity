@@ -21,6 +21,8 @@
 
 		<logout logout-success-url="/login" />
 
+		<remember-me />
+
 	</http>
 
 

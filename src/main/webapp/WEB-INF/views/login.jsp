@@ -37,7 +37,8 @@
 
 
 		<footer>
-
+			<input name="_spring_security_remember_me"
+				   type="checkbox" class="checkAdmin" /> <label for="remember_me">Запомнить</label>
 			<input type="submit" class="btnLogin" value="Submit">
 
 			<c:if test="${not empty error}">

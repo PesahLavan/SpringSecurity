@@ -4,6 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,11 +46,22 @@ public class HomeController {
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String mainPage() {
-
+		printUserDetails();
 		return "/content/user";
 
 	}
+	private void printUserDetails() {
 
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		logger.info("password = " + userDetails.getPassword());
+		logger.info("username = " + userDetails.getUsername());
+
+		for (GrantedAuthority auth : userDetails.getAuthorities()) {
+			logger.info(auth.getAuthority());
+		}
+
+	}
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminPage() {
 
