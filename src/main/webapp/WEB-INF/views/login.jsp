@@ -9,7 +9,7 @@
 <html>
 <head>
 
-	<link href="resources/css/home.css" rel="stylesheet"/>
+	<link href="<%=request.getContextPath()%>/resources/css/home.css" rel="stylesheet"/>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
@@ -19,7 +19,7 @@
 
 <body>
 
-	<form method="POST" action="j_spring_security_check" class="box login">
+<form method="POST" action="<%=request.getContextPath()%>/j_spring_security_check" class="box login">
 
 
 		<fieldset class="boxBody">
