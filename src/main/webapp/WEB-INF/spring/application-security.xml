@@ -8,6 +8,7 @@
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
+
 	<http auto-config="true">
 
 		<access-denied-handler error-page="/accessDenied" />
@@ -21,7 +22,7 @@
 
 		<logout logout-success-url="/login" />
 
-		<remember-me />
+		<remember-me data-source-ref="dataSource" />
 
 	</http>
 
@@ -30,12 +31,19 @@
 
 	<authentication-manager>
 		<authentication-provider>
-			<user-service>
-				<user name="user" password="user" authorities="ROLE_USER" />
-				<user name="admin" password="admin" authorities="ROLE_ADMIN" />
-			</user-service>
+			<!-- <user-service> -->
+			<!-- <user name="user" password="user" authorities="ROLE_USER, ROLE_ADMIN"
+				/> -->
+			<!-- <user name="admin" password="admin" authorities="ROLE_ADMIN" /> -->
+			<!-- </user-service> -->
+
+			<jdbc-user-service data-source-ref="dataSource" />
+
+
 		</authentication-provider>
 	</authentication-manager>
+
+
 
 
 </beans:beans>
