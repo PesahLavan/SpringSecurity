@@ -42,29 +42,29 @@ INSERT INTO `authorities` VALUES (1,'User','ROLE_USER');
 UNLOCK TABLES;
 
 --
--- Table structure for table `users`
+-- Table structure for table `persistent_login`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `persistent_login`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
+CREATE TABLE `persistent_login` (
   `username` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `enabled` int(11) DEFAULT NULL,
-  KEY `fk_username_idx` (`username`),
-  CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `authorities` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `series` varchar(45) DEFAULT NULL,
+  `token` varchar(45) DEFAULT NULL,
+  `last_used` datetime DEFAULT NULL,
+  KEY `fk_username_idx` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `persistent_login`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('user','user',1);
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `persistent_login` WRITE;
+/*!40000 ALTER TABLE `persistent_login` DISABLE KEYS */;
+INSERT INTO `persistent_login` VALUES ('user','user','1',NULL);
+/*!40000 ALTER TABLE `persistent_login` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -84,4 +84,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-09 17:31:02
+-- Dump completed on 2016-10-09 18:47:59

@@ -21,7 +21,6 @@ import java.security.Principal;
 @Controller
 public class HomeController {
 
-
 	@Autowired
 	private AccessDecisionManager accessDecisionManager;
 
@@ -47,9 +46,17 @@ public class HomeController {
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String mainPage() {
 		printUserDetails();
+
 		return "/content/user";
+	}
+
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	public String adminPage() {
+
+		return "/content/admin";
 
 	}
+
 	private void printUserDetails() {
 
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -60,12 +67,6 @@ public class HomeController {
 		for (GrantedAuthority auth : userDetails.getAuthorities()) {
 			logger.info(auth.getAuthority());
 		}
-
-	}
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String adminPage() {
-
-		return "/content/admin";
 
 	}
 

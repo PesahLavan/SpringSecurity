@@ -11,6 +11,9 @@
 
 	<http auto-config="true">
 
+		<remember-me data-source-ref="dataSource" />
+
+
 		<access-denied-handler error-page="/accessDenied" />
 
 		<intercept-url pattern="/user" access="ROLE_USER" />
@@ -21,8 +24,6 @@
 					password-parameter="password_login" />
 
 		<logout logout-success-url="/login" />
-
-		<remember-me data-source-ref="dataSource" />
 
 	</http>
 
@@ -37,7 +38,7 @@
 			<!-- <user name="admin" password="admin" authorities="ROLE_ADMIN" /> -->
 			<!-- </user-service> -->
 
-			<jdbc-user-service data-source-ref="dataSource" />
+			<jdbc-user-service data-source-ref="dataSource"/>
 
 
 		</authentication-provider>
