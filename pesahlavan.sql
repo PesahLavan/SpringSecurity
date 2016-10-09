@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `authorities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `authorities` (
-  `id` int(11) NOT NULL,
-  `username` varchar(45) DEFAULT NULL,
-  `authority` varchar(45) DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `authority` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_username_idx` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -42,13 +42,89 @@ INSERT INTO `authorities` VALUES (1,'User','ROLE_USER');
 UNLOCK TABLES;
 
 --
--- Table structure for table `persistent_login`
+-- Table structure for table `group_authorities`
 --
 
-DROP TABLE IF EXISTS `persistent_login`;
+DROP TABLE IF EXISTS `group_authorities`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `persistent_login` (
+CREATE TABLE `group_authorities` (
+  `group_id` bigint(20) NOT NULL,
+  `authority` varchar(45) NOT NULL,
+  KEY `fk_group_authorities_group_idx` (`group_id`),
+  CONSTRAINT `fk_group_authorities_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `group_authorities`
+--
+
+LOCK TABLES `group_authorities` WRITE;
+/*!40000 ALTER TABLE `group_authorities` DISABLE KEYS */;
+INSERT INTO `group_authorities` VALUES (2,'ROLE_ADMIN'),(2,'ROLE_USER'),(1,'ROLE_USER');
+/*!40000 ALTER TABLE `group_authorities` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `group_members`
+--
+
+DROP TABLE IF EXISTS `group_members`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `group_members` (
+  `id` bigint(20) NOT NULL,
+  `username` varchar(45) NOT NULL,
+  `group_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_group_members_group_idx` (`group_id`),
+  CONSTRAINT `fk_group_members_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `group_members`
+--
+
+LOCK TABLES `group_members` WRITE;
+/*!40000 ALTER TABLE `group_members` DISABLE KEYS */;
+INSERT INTO `group_members` VALUES (1,'admin',2),(2,'user',1);
+/*!40000 ALTER TABLE `group_members` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `groups`
+--
+
+DROP TABLE IF EXISTS `groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `groups` (
+  `id` bigint(20) NOT NULL,
+  `group_name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `groups`
+--
+
+LOCK TABLES `groups` WRITE;
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+INSERT INTO `groups` VALUES (1,'users'),(2,'administrators');
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `persistent_logins`
+--
+
+DROP TABLE IF EXISTS `persistent_logins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `persistent_logins` (
   `username` varchar(45) DEFAULT NULL,
   `series` varchar(45) DEFAULT NULL,
   `token` varchar(45) DEFAULT NULL,
@@ -58,13 +134,36 @@ CREATE TABLE `persistent_login` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `persistent_login`
+-- Dumping data for table `persistent_logins`
 --
 
-LOCK TABLES `persistent_login` WRITE;
-/*!40000 ALTER TABLE `persistent_login` DISABLE KEYS */;
-INSERT INTO `persistent_login` VALUES ('user','user','1',NULL);
-/*!40000 ALTER TABLE `persistent_login` ENABLE KEYS */;
+LOCK TABLES `persistent_logins` WRITE;
+/*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
+/*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `enabled` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('user','user',1),('admin','admin',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -84,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-09 18:47:59
+-- Dump completed on 2016-10-09 20:26:42
