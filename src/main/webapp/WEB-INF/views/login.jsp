@@ -19,12 +19,6 @@
 
 <body>
 
-	<c:if test="${not empty error}">
-		${error}
-	</c:if>
-
-
-
 	<form method="POST" action="j_spring_security_check" class="box login">
 
 
