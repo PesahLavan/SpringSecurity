@@ -17,7 +17,7 @@
 		<access-denied-handler error-page="/accessDenied" />
 
 		<intercept-url pattern="/user" access="ROLE_USER" />
-		<intercept-url pattern="/admin" access="ROLE_ADMIN" />
+		<intercept-url pattern="/admin" access="ROLE_ADMIN, ROLE_USER" />
 
 		<form-login login-page='/login' default-target-url="/user"
 					authentication-failure-url="/login?error=true" username-parameter="user_login"
@@ -28,7 +28,8 @@
 	</http>
 
 
-	<beans:bean id="jdbcGroupsImpl" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+	<beans:bean id="jdbcGroupsImpl"
+				class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
 		<beans:property name="enableGroups" value="true" />
 		<beans:property name="enableAuthorities" value="false" />
 		<beans:property name="dataSource" ref="dataSource" />
@@ -39,6 +40,7 @@
 
 	<authentication-manager>
 		<authentication-provider user-service-ref="jdbcGroupsImpl">
+			<password-encoder ref="bcrypt" />
 			<!-- <user-service> -->
 			<!-- <user name="user" password="user" authorities="ROLE_USER, ROLE_ADMIN"
 				/> -->
@@ -47,6 +49,12 @@
 
 		</authentication-provider>
 	</authentication-manager>
+
+	<beans:bean id="bcrypt" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength" value="11" />
+	</beans:bean>
+
+
 
 
 
